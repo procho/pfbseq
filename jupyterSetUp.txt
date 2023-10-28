@@ -1,0 +1,15 @@
+## Setting up conda enviroment for scanpy and jupyter
+
+#Create project environment
+
+conda create -n final_project python=3.8
+
+#Activate created environment
+
+conda activate final_project
+
+#install packages
+
+conda install -c conda-forge jupyter numpy pandas scanpy matplotlib
+
+
