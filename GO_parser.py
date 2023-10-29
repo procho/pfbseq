@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 import sys
 
-# Read in .gaf file, remove less reliable evidence
+# Read in .gaf files (contains full list of human and mouse GO record, downloaded from https://current.geneontology.org/products/pages/downloads.html
+# remove less reliable evidence
 species = sys.argv[1]
 
 if species == "mouse":
@@ -14,7 +15,7 @@ else:
 
 line_count = 1
 
-GOdict = {} # Dictionary, keys are unique genes, values are lists of GO identifiers associated with genes.
+GOdict = {} # Dictionary, keys are unique genes, values are lists of UNIQUE(!!) GO identifiers associated with genes.
 
 less_reliable_annotations = ["HDA","HGI","HMP","HEP","RCA","IEP"]
 Gene_set = set()
@@ -38,9 +39,9 @@ for line in fh:
 			
 			# Add this GO entry to GOdict. Create Gene key in GOdict if not already exist
 			if Gene not in GOdict:
-				GOdict[Gene] = []
+				GOdict[Gene] = set()
 
-			GOdict[Gene].append(GO)
+			GOdict[Gene].add(GO)
 			
 		line_count += 1
 
