@@ -18,6 +18,11 @@ Inputs:
 
 GEO info: https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM5123955 CITE-seq, scATAC-seq, single-cell and single-nuclei 10x Multiome ATAC + Gene Expression, and TEA-seq libraries from the same PBMC sample in parallel.
 
+DEMO Examples:
+https://cellgeni.github.io/notebooks/html/new-10kPBMC-Scanpy.html
+https://scanpy-tutorials.readthedocs.io/en/latest/pbmc3k.html
+
+
 Data: https://github.com/AllenInstitute/aifi-swanson-teaseq#cite (The .h5 file has the RNA-seq data) The .csv file has the matrix of surface marker ADT counts
 
 Outputs:

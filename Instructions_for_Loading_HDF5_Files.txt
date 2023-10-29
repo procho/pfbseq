@@ -1,0 +1,15 @@
+##instructions for loading a scRNA-seq dataset in HDF5 (.h5) format into "scanpy" using ipython
+
+1. enter "ipython" on command line to enter.
+2. "import scanpy as sc"
+3. download the .h5 file into your directory of choice.
+4."adata = sc.read_10x_h5('filename', genome=None, gex_only=True, backup_url=None)"
+
+##you will receive a warning about '.var_names_make_unique'
+
+5."adata.var_names_make_unique()
+
+##you can now conduct various scanpy calculations and generate plots. Browse this website for instructions on how to use these functions. https://scanpy.readthedocs.io/en/latest/generated/scanpy.pl.heatmap.html
+
+
+ 
