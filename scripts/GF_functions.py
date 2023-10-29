@@ -49,19 +49,20 @@ def set_intersection(set_list, anno_chip):
     
 
 
-def main():
-  input_peak_file = sys.argv[1]
-  input_deg_file = sys.argv[2]
-  input_log2fc = sys.argv[3]
-  input_pval = sys.argv[4]
-  
-  deg_set_list = subset_degs(input_deg_file, input_log2fc, input_pval)
-  
-  print(f'Number of upregulated genes: {len(deg_set_list[0])}\nNumber of downregulated genes: {len(deg_set_list[1])}')
+# This function will take three sets and three names and will create a three-way venn diagram
+# showing the intersection between all three sets with the appropriate name labels
 
-  intersect_list=set_intersection(deg_set_list, input_peak_file)
-  print(intersect_list)
+def venn_diagram(set1, set2, set3, name1, name2, name3):
+  venn3([set1,set2,set3], (name1, name2, name3))
+  plt.savefig('venn_diagram.png')
 
-if __name__ == '__main__':
-  main()
-  
+
+# This function will take two lists, one with X values and one with Y values, and will make a bar graph
+
+def bar_graph(x_list, y_list):
+  fig,ax = plt.subplots(figsize = (8,8))
+  ax.bar(x_list, y_list, color = 'maroon', edgecolor = 'black')
+  ax.set_ylabel("% DEGs bound by TF")
+  ax.grid(b='visible', color = 'grey', linestyle = '-.', linewidth = 0.3, alpha = 0.2)
+  ax.set_title("RNA-seq Differential Genes vs ChIP-seq Peaks")
+  fig.savefig('bar_graph.png')  
