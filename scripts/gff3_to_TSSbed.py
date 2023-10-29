@@ -11,6 +11,7 @@ import sys
 # identified transcription start site!
 
 # gff3 file downloaded from gencode
+
 def gff3_to_tssbed(GFF3_file):
   with open(GFF3_file, 'r') as GFF_read, open('TSS.bed', 'w') as GFF_write:
     for line in GFF_read:
