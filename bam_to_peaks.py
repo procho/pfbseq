@@ -7,7 +7,6 @@ import os
 # bam file ---> samtools depth output
 # depth output -(discard lines below read threshhold)-> depths above threshhold file
 # thresh file ---> list of peaks ---> bed file of peaks
-print(sys.argv[1], sys.argv[2])
 
 def bam_to_depth(bam_file): #input bam file, runs samtools depth
     call(f"samtools depth -o {bam_file[:-4] + '.depth'} {bam_file}", shell=True)
@@ -57,7 +56,16 @@ def thresh_to_peaks(thresh_file):
     
 funcs = {'bam_to_depth': bam_to_depth, 'depth_to_thresh': depth_to_thresh, 'thresh_to_peaks' : thresh_to_peaks}
 
-#def main():
-
+def main():
+    file1 = sys.argv[1]
+    bam_to_depth(file1)
+    depth_to_thresh(f"{file1[:-4] + '.depth'}")
+    thresh_to_peaks(f"{file1[:-4] + '.thresh.depth'}")
+    print('whoa. I... I think it WORKED that time! Wow. Shoot. I mean, wow. That feels good.')
 if __name__ == '__main__':
-    funcs[sys.argv[1]](sys.argv[2])
+    if len(sys.argv) == 3:
+        funcs[sys.argv[1]](sys.argv[2])
+    elif len(sys.argv) == 2:
+        main()
+    else:
+        print('usage is <.bam file> to output <.bed file> or <function> <input file> to run aspecific function')
