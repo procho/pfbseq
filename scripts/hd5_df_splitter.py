@@ -14,6 +14,8 @@ def split_clusters(filename,outdir = './'): #define name and input for function
 
 
     for i in range(0,len(df.columns),2): # loop over list from 0 to number of columns by 2 - [0,2,4,6 ...]
+
+### can also do df[df['0_p'] < 1e-3]['0_n']
  
         cluster_df = df.iloc[:,[i,i+1]] #define cluster_df as a two column df for the current(i) cluster number
         cluster_df = cluster_df[cluster_df.iloc[:,1] < 1e-3] # filte for only pvalues smaller than 10e-3
