@@ -2,6 +2,8 @@
 
 import pandas as pd
 import sys
+import matplotlib.pyplot as plt
+from matplotlib_venn import venn3
 
 
 # This function will take a tab separated file of DEGs (gene	log2fc	pval) and will return two files
@@ -12,6 +14,9 @@ def subset_degs(deg_file, log2fc, pval):
   # Read in the DEseq2 table to pandas
   deg_df = pd.read_csv(deg_file, sep='\t', header=None, names=['gene','log2fc','pval'])
   
+  all_genes = deg_df['gene']
+  all_genes.to_csv('all_genes.txt', sep='\t', index=False, header=False)
+
   upregulated = deg_df[(deg_df['log2fc'] > float(log2fc)) & (deg_df['pval'] < float(pval))]
   upregulated.to_csv('upregulated_genes.txt',sep='\t')
 
