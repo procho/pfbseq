@@ -1,4 +1,3 @@
-gene
 Trf
 Itih2
 Myh7
