@@ -3,27 +3,17 @@
 import pandas as pd
 import sys
 
-### This function will take three inputs:
-### 1) A DEseq file with DEGs, log2FC, pval, 2) desired log2fc cutoff, 3) desired p value cutoff
 
-### The function will return:
-### A list of sets where list[0] = upregulated genes and list[1] = downregulated genes according to the user input cutoffs
-
-# The script will also return a summary .txt. file with the number and identities of differentially up- and downregulated genes according to input cutoffs 
-
-
-
-
+# This function will take a tab separated file of DEGs (gene	log2fc	pval) and will return two files
+# of up or downregulated genes based on specified log2fc and pvalue cutoffs as well as a list of sets
+# where list[0] is significantly upregulated genes and list[1] is downregulated genes
 
 def subset_degs(deg_file, log2fc, pval):
   # Read in the DEseq2 table to pandas
-  # Must be in this format! with the column names in this order....
   deg_df = pd.read_csv(deg_file, sep='\t', header=None, names=['gene','log2fc','pval'])
-
+  
   upregulated = deg_df[(deg_df['log2fc'] > float(log2fc)) & (deg_df['pval'] < float(pval))]
   upregulated.to_csv('upregulated_genes.txt',sep='\t')
-
-
 
   downregulated = deg_df[(deg_df['log2fc'] < -(float(log2fc))) & (deg_df['pval'] < float(pval))]
   downregulated.to_csv('downregulated_genes.txt',sep='\t')  
@@ -36,21 +26,28 @@ def subset_degs(deg_file, log2fc, pval):
   set_list.append(down_set)
   
   return set_list
- 
+
+
+
+# This function will take a list of sets of DEGs where list[0] is upregulated genes and list[1] is
+# downregulated genes. It will also take a file containing annotated chip seq peaks where the gene
+# names are in column[0]. 
+# The script will return a list of sets where list[0] is upregulated bound genes and list[1] is
+# downregulated bound genes 
 
 def set_intersection(set_list, anno_chip):
-  # Have a list of upregulated and downregulated genes
-  # Also include annotated ChIP seq peaks (with genes in column 1)
   chip_df = pd.read_csv(anno_chip, sep='\t', header = None)
   peak_set = set(chip_df[0])
+  
   intersect_list = []
+  
   for DE_set in set_list:
     intersect = DE_set.intersection(peak_set)
     intersect_list.append(intersect)
 
   return intersect_list
     
- 
+
 
 def main():
   input_peak_file = sys.argv[1]
