@@ -58,7 +58,7 @@ out_file = 'all_PBMC_genelist.txt'
 adata.var[['gene_ids']].to_csv('./all_PBMC_genelist.csv')
 ```
 
-* Regressing out data
+* Regressing out mitochondrial data
 
 ```python
 sc.pp.regress_out(adata, ['total_counts', 'pct_counts_mt'])
@@ -69,68 +69,17 @@ sc.pp.regress_out(adata, ['total_counts', 'pct_counts_mt'])
 ```python
 sc.pp.neighbors(adata, n_neighbors=5, n_pcs=7)
 sc.tl.umap(adata)
-sc.tl.leiden(adata)
+sc.tl.leiden(adata, resolution = 0.8)
 ```
-
-* Leiden Clustering
-
-Resolution will change number of clusters found:
+* Generating UMAP
 
 ```python
-sc.tl.leiden(adata, resolution = 1.2, key_added = "leiden_1.2")
-sc.tl.leiden(adata, resolution = 1.5, key_added = "leiden_1.5")
-sc.tl.leiden(adata, resolution = 2.0, key_added = "leiden_2.0")
-```
-```
-running Leiden clustering
-    finished: found 14 clusters and added
-    'leiden_1.2', the cluster labels (adata.obs, categorical) (0:00:00)
-running Leiden clustering
-    finished: found 15 clusters and added
-    'leiden_1.5', the cluster labels (adata.obs, categorical) (0:00:00)
-running Leiden clustering
-    finished: found 19 clusters and added
-    'leiden_2.0', the cluster labels (adata.obs, categorical) (0:00:00)
+with plt.rc_context({'figure.figsize': (8, 8)}):
+    sc.pl.umap(adata, color=['leiden'],legend_loc='on data')
 ```
 
-```python
-sc.pl.umap(adata, color=['leiden_1.2', 'leiden_1.5', 'leiden_2.0'], legend_loc='on data', wspace = 0.25, legend_fontsize=10)
-```
+![image](https://github.com/procho/pfbseq/assets/110238030/563b6db8-2127-4961-9eca-8176d449d350)
 
-```python
-sc.pl.umap(adata, color=['leiden', 'CD4', 'CD8A', 'TCF7L2'])
-```
-
-* Can do clustering based on kmeans or Agglomerative Clustering
-
-```python
-from sklearn.cluster import KMeans
-from sklearn.metrics import adjusted_rand_score
-X_pca = adata.obsm['X_pca'] 
-
-kmeans = KMeans(n_clusters=15, random_state=0).fit(X_pca) 
-adata.obs['kmeans15'] = kmeans.labels_.astype(str)
-kmeans = KMeans(n_clusters=20, random_state=0).fit(X_pca) 
-adata.obs['kmeans20'] = kmeans.labels_.astype(str)
-kmeans = KMeans(n_clusters=25, random_state=0).fit(X_pca) 
-adata.obs['kmeans25'] = kmeans.labels_.astype(str)
-
-sc.pl.umap(adata, color=['kmeans15', 'kmeans20', 'kmeans25'], legend_loc='on data', wspace = 0.25, legend_fontsize=10)
-```
-```python
-from sklearn.cluster import AgglomerativeClustering
-
-cluster = AgglomerativeClustering(n_clusters=15, affinity='euclidean', linkage='ward')
-adata.obs['hclust15'] = cluster.fit_predict(X_pca).astype(str)
-
-cluster = AgglomerativeClustering(n_clusters=20, affinity='euclidean', linkage='ward')
-adata.obs['hclust20'] = cluster.fit_predict(X_pca).astype(str)
-
-cluster = AgglomerativeClustering(n_clusters=25, affinity='euclidean', linkage='ward')
-adata.obs['hclust25'] = cluster.fit_predict(X_pca).astype(str)
-
-sc.pl.umap(adata, color=['hclust15', 'hclust20', 'hclust25'], legend_loc='on data', wspace = 0.25, legend_fontsize=10)
-```
 
 
 
