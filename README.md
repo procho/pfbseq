@@ -9,17 +9,25 @@ A toolkit for the intersection and analysis of omics datasets
 As omics experiments grow more and more commonplace, the need for tools to integrate these various data modalities has grown. This wrapper script allows for quick and easy integration of two common datasets, bulk RNA-seq and ChIP-seq.
 
 ### Overview of Pipeline:
-
 ```
-usage: ChIP_RNA_intersect.py [-h] -G GFF3_FILE -r RNASEQ_FILE [-b BED_FILE] [-B BAM_FILE] [-f LOG2FC] [-p PVAL]
+usage: ChIP_RNA_intersect.py [-h] -G GFF3_FILE -r RNASEQ_FILE [-b BED_FILE] [-B BAM_FILE] [-f LOG2FC]
+                             [-p PVAL]
 
 This is a wrapper script for comparison of RNAseq and ChIPseq data.
 
-If a bam or a sam file is provided from a ChIP-seq experiment, a custom peak calling algorithm will be run. Otherwise a pre-made bed file may be entered with called ChIP-seq peaks.
+If a bam or a sam file is provided from a ChIP-seq experiment, a custom peak calling algorithm will be run.
+Otherwise a pre-made bed file may be entered with called ChIP-seq peaks.
 
-An RNAseq file should be provided containing differential expression data, it should be a tab-delimited file containing columns for gene IDs, fold change (log2 transformed), and p values. If desired, the user may designate custom pval and log2fc cutoffs for downstream analysis. Otherwise, reasonable default values will be utilized.
+An RNAseq file should be provided containing differential expression data
+and should be a tab-delimited file containing columns for gene IDs, fold change (log2 transformed), and p values.
+If desired, the user may designate custom pval and log2fc cutoffs for downstream analysis.
+Otherwise, reasonable default values will be utilized.
 
-This script will annotate called peaks (either from an input bed file or generated from a bam file) based on the distance to the nearest gene TSS. It will then output many files and graphs representing overlap and intersections between significant differentially expressed genes (either up or downregulated) to called ChIP-seq peaks. Finally, the script will output enriched GO terms for either upregulated bound genes or downregulated bound genes.
+This script will annotate called peaks (either from an input bed file or generated from a bam file)
+based on the distance to the nearest gene TSS. It will then output many files and graphs
+representing overlap and intersections between significant differentially
+expressed genes (either up or downregulated) to called ChIP-seq peaks.
+Finally, the script will output enriched GO terms for either upregulated bound genes or downregulated bound genes.
 
 options:
   -h, --help      show this help message and exit
