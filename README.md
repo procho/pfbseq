@@ -42,16 +42,16 @@ options:
 
 
 
-* Peak Calling:
+* **Peak Calling:**
 (description of peak calling algorithm + script)
 
-* Peak Annotation:
+* **Peak Annotation:**
 (description of peak annotation script)
  
-* Integration of RNA-seq and ChIP-seq
+* **Integration of RNA-seq and ChIP-seq**
 (description of scripts and graphs)
 
-* GO Analysis of DEGs and ChIP-seq Peaks
+* **GO Analysis of DEGs and ChIP-seq Peaks**
 (description of GO scripts)
 
 
