@@ -238,7 +238,7 @@ with plt.rc_context({'figure.figsize': (8, 8)}):
 
 ![image](https://github.com/procho/pfbseq/assets/110238030/7c1e2e6b-0ded-420d-8700-147e37e96d55)
 
-
+* Next steps: correlate the ADT with the RNA data for optimal cell type annotation.
 
 
 ### GO Annotation walkthrough
