@@ -44,7 +44,10 @@ options:
 
 
 * **Peak Calling:**
-(description of peak calling algorithm + script)
+Input sam or bam files are run through ```samtools depth```, a function which
+returns the locations and read depth of each covered base in the input file.
+This output is filtered by removing all bases with a read depth below 6, and
+consecutive bases are grouped into peaks and output to a bed file.
 
 * **Peak Annotation:**
 ChIP-seq peaks are annotated based on a user input GFF3 genome annotation file.
