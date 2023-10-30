@@ -47,13 +47,12 @@ options:
 
 * **Peak Annotation:**
 ChIP-seq peaks are annotated based on a user input GFF3 genome annotation file.
-First, the GFF3 file is parsed using '''gff3_to_TSSbed.py''' which extracts
+First, the GFF3 file is parsed using gff3_to_TSSbed.py which extracts
 transcription start site information and gene names from the GFF3 file. Then,
 ChIP-seq peaks are annotated to the closest transcription start site using
-bedtools in '''annotate_bed_to_TSS.sh'''. 
+bedtools in annotate_bed_to_TSS.sh. 
  
 * **Integration of RNA-seq and ChIP-seq:**
-
 The input RNAseq gene list is parsed to identify up and downregulated genes
 based on user-defined cutoffs. These lists are then integrated with annotated
 ChIP-seq peaks. A number of summary statistics are reported in a summary.txt
@@ -64,13 +63,20 @@ chart are also generated to visualize overlap between these datasets:
 <img src='./images/venn_diagram.png' width='400' height='300'/>        <img src='./images/bar_graph.png' width='300' height='300'/>
 
 
+* **GO Pathway Analysis of DEGs and ChIP-seq Peaks**
+Gene Ontology pathway analysis is performed on lists of overlapping annotated
+peaks with either upregulated or downregulated genes. Results are exported
+in a table format with relevant statistics:
 
-
-* **GO Analysis of DEGs and ChIP-seq Peaks**
-(description of GO scripts)
-
-
-
+'''
+GO_term fold_change     pvalue
+GO:0070161      level-03        depth-03        anchoring junction [cellular_component] 4.821307290568866       3.3283419434173545e-09
+GO:0005886      level-03        depth-03        plasma membrane [cellular_component]    1.8713643260863588      1.7589741581267755e-08
+GO:0016020      level-02        depth-02        membrane [cellular_component]   1.565372257152236       3.452880176773256e-07
+GO:0015629      level-06        depth-06        actin cytoskeleton [cellular_component] 4.968408197939896       7.903768061919691e-07
+GO:0042995      level-02        depth-02        cell projection [cellular_component]    2.5492854843103747      1.2241457808974728e-06
+GO:0009897      level-03        depth-03        external side of plasma membrane [cellular_component]   3.988385412504329       5.073967906570723e-06
+'''
 
 
 
