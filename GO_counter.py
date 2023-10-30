@@ -1,18 +1,18 @@
 #!/usr/bin/env python3
 
 import sys
-import subprocess
 from goatools import obo_parser
 
-def GO_id2term(go_id):
+def GO_id2term():
 
-	go_obo = "/Users/pfb09/final_project/pfbseq/data/go-basic.obo"
+	go_obo = "go-basic.obo"
 	go = obo_parser.GODag(go_obo)
-	go_term = go[go_id]
-	return go_term
+	return go
 
 def GeneGoDict(filename):
 	# A function that generate dictionary with genes and associated GO terms. IN: GO_parser.out file(human or mouse)
+	id2term_dict = GO_id2term()
+	
 	GO_Dict = {}
 	fh = open(filename,"r")
 	for line in fh:
@@ -20,7 +20,8 @@ def GeneGoDict(filename):
 		splitline = line.split("\t")
 		gene = splitline[0]
 		GO_list = splitline[1:]
-		GO_Dict[gene] = GO_list
+		GO_termlist = [id2term_dict[GOid] for GOid in GO_list]
+		GO_Dict[gene] = GO_termlist
 	
 	return(GO_Dict)
 	

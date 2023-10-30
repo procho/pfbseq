@@ -5,11 +5,6 @@ from GO_enrich_analyzer import *
 
 species = sys.argv[1]
 
-# Help message
-if species != "mouse" and species != "human":
-	print(f"Usage: {sys.argv[0]} <species = \"human\" or \"mouse\">")
-	exit(1)
-
 # Get species GO dictionary
 speciesDict = GeneGoDict(f"GO_parser_{species}.out")
 
@@ -65,30 +60,9 @@ elif species == "human":
 			fh_w.write(f"{GO}\t{fold_change}\t{pvalue}\n")
 		
 		fh_w.close()
-		
 
-
-#GO_results_down = fold_enrich(downsample_file, ctrl_file, speciesDict)
-
-
-# Testing how many genes are in the species dictionary
-#badgene_fh = open("bad_genes.txt","w")
-#ctrlGene_fh = open(ctrl_file, "r")
-#good_gene_count = 0
-#bad_gene_count = 0
-#bad_gene_list = []
-#for gene in ctrlGene_fh:
-#	gene = gene.rstrip()
-#	if gene in speciesDict:
-#		good_gene_count += 1
-#	else:
-#		bad_gene_count += 1
-#		bad_gene_list.append(gene)
-#		badgene_fh.write(f"{gene}\n")
-
-#print(f"good genes: {good_gene_count}, bad genes: {bad_gene_count}")
-
-#ctrlGene_fh.close()
-#badgene_fh.close()	
-	
+else:
+	# Help message
+	print(f"Usage: {sys.argv[0]} <species = \"human\" or \"mouse\">")		
+	exit(1)
 
