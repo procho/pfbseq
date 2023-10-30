@@ -49,7 +49,20 @@ options:
 (description of peak annotation script)
  
 * **Integration of RNA-seq and ChIP-seq**
-(description of scripts and graphs)
+
+The input RNAseq gene list is parsed to identify up and downregulated genes
+based on user-defined cutoffs. These lists are then integrated with annotated
+ChIP-seq peaks. A number of summary statistics are reported in a summary.txt
+file, as well as lists of significant DE genes, and lists of overlap between
+upregulated or downregulated genes and annotated peaks. A bar graph and a pie
+chart are also generated to visualize overlap between these datasets:
+
+![venn_diagram](./images/venn_diagram.png)
+
+![bar_graph](./images/bar_graph.png)
+
+
+
 
 * **GO Analysis of DEGs and ChIP-seq Peaks**
 (description of GO scripts)
