@@ -27,7 +27,7 @@ for line in fh:
 		continue
 	else:
 		# Extracting gene name and GO from this line
-		line.rstrip()
+		line = line.rstrip()
 		info_list = line.split("\t")
 		Gene = info_list[2]
 		Gene_set.add(Gene)
