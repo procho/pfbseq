@@ -9,7 +9,7 @@ A toolkit for the intersection and analysis of omics datasets
 As omics experiments grow more and more commonplace, the need for tools to integrate these various data modalities has grown. This wrapper script allows for quick and easy integration of two common datasets, bulk RNA-seq and ChIP-seq.
 
 ### Overview of Pipeline:
-
+<img src='./images/biorender_workflow.png' width='800' height='300'/> 
 
 ```
 usage: ChIP_RNA_intersect.py [-h] -G GFF3_FILE -r RNASEQ_FILE [-b BED_FILE] [-B BAM_FILE] [-f LOG2FC]
@@ -40,7 +40,7 @@ options:
   -f LOG2FC       Optional: supply log2fc cutoff for differentially expressed gene list. Default: 0.585
   -p PVAL         Optional: supply p value cutoff for differentially expressed gene list. Default: 0.05
 ```
-<img src='./images/biorender_workflow.png' width='800' height='300'/> 
+
 
 * **Peak Calling:**
 (description of peak calling algorithm + script)
