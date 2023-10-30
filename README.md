@@ -51,7 +51,7 @@ ChIP-seq peaks are annotated based on a user input GFF3 genome annotation file.
 First, the GFF3 file is parsed using ```gff3_to_TSSbed.py``` which extracts
 transcription start site information and gene names from the GFF3 file. Then,
 ChIP-seq peaks are annotated to the closest transcription start site using
-bedtools in ```annotate_bed_to_TSS.sh```. 
+[bedtools closest](https://bedtools.readthedocs.io/en/latest/content/tools/closest.html) in ```annotate_bed_to_TSS.sh```. 
  
 * **Integration of RNA-seq and ChIP-seq:**
 The input RNAseq gene list is parsed to identify up and downregulated genes
