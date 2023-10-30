@@ -22,19 +22,19 @@ import matplotlib.pyplot as plt
 adata = sc.read_10x_h5('/Users/pfb16/final_project/pfbseq/scSEQ_data/GSM5123955_X066-RP0C1W1_leukopak_perm-cells_cite_200M_rna_counts.h5')#replace with path to your dataset
 adata.var_names_make_unique()
 ```
-
-* Filtering data sets based on desired parameters
-
-```python
-sc.pp.filter_cells(adata, min_genes=200)# filters out cells with few transcripts
-sc.pp.filter_genes(adata, min_cells=3) # filters out genes expressed in few cells
-```
-
 * Annotating mitochondrial genes
 
 ```python
 adata.var['mt'] = adata.var_names.str.startswith('MT-')  # annotate the group of mitochondrial genes as 'mt'
 sc.pp.calculate_qc_metrics(adata, qc_vars=['mt'], percent_top=None, log1p=False, inplace=True)
+```
+* Filtering data sets based on desired parameters
+
+```python
+sc.pp.filter_cells(adata, min_genes=200)# filters out cells with few transcripts
+sc.pp.filter_genes(adata, min_cells=3) # filters out genes expressed in few cells
+adata = adata[adata.obs.n_genes_by_counts < 2500, :] #Total-count normalize (library-size correct) the data matrix X to 10,000 reads per cell, so that counts become comparable among cells
+adata = adata[adata.obs.pct_counts_mt < 5, :]
 ```
 
 * Normalizing data and accounting for highly variable data
@@ -45,6 +45,7 @@ sc.pp.normalize_total(adata, target_sum=1e4) #Logarithmize the data
 sc.pp.log1p(adata) #Identify highly-variable genes.
 
 sc.pp.highly_variable_genes(adata, min_mean=0.0125, max_mean=3, min_disp=0.5) # extracting highly variable genes
+adata.var.highly_variable.value_counts()
 
 adata = adata[:, adata.var.highly_variable] #Regress out effects of total counts per cell and the percentage of mitochondrial genes expressed. Scale the data to unit variance.
 
@@ -66,11 +67,9 @@ sc.pp.regress_out(adata, ['total_counts', 'pct_counts_mt'])
 * Clustering
 
 ```python
-sc.pp.neighbors(adata, n_neighbors=10, n_pcs=40)
-
+sc.pp.neighbors(adata, n_neighbors=5, n_pcs=7)
 sc.tl.umap(adata)
-
-sc.pl.umap(adata, color=['LYZ','MS4A1','CD8B','CCR7','IL32','NKG7','LILRA4','FCER1A','PPBP'], ncols = 3) #Checking presence of specified genes in the cluster
+sc.tl.leiden(adata)
 ```
 
 * Leiden Clustering
@@ -133,7 +132,6 @@ adata.obs['hclust25'] = cluster.fit_predict(X_pca).astype(str)
 sc.pl.umap(adata, color=['hclust15', 'hclust20', 'hclust25'], legend_loc='on data', wspace = 0.25, legend_fontsize=10)
 ```
 
-![image](https://github.com/procho/pfbseq/assets/110238030/7f5f7f64-2a71-4602-a1a3-a56d8edcdfa4)
 
 
 
