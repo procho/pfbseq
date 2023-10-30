@@ -92,13 +92,29 @@ Note: Samtools must be installed separately!
 
 
 
-## Single Cell RNA-seq to UMAP walkthrough
+## PART TWO: Single Cell CITE_SEQ to UMAP and GO annotation walkthrough
 
 ### Overview
 
 In this overview we will highlight the various functions of scanpy in the analysis of single-Cell RNA-seq data and the creation of UMAP graphs for the scRNA-seq data and Antibody counts.
 
-### RNA walkthrough
+The data was downloaded from GEO- and is a published dataset from a 5' CITEseq experiment on PBMC Cells. There were two files, one for the RNAseq that was an HDF5 format and a second file of the single cell ADT data that was .CSV. This data was not complete on GEO because the barcodes on the .CSV file were reencoded so it was impossible to correlate the RNAseq counts with the ADT assignment in each single cell across the two datasets.  
+
+
+<img src='./images/Barcodes.png' />
+
+
+<img src='./images/Intro_1.png' /> 
+
+<img src='./images/Intro_2.png' /> 
+
+
+The Antibody/Barcode list is as follows as well as cell counts for each marker:
+
+<img src='./images/two_prot.png' />
+
+
+### 5' RNAseq RNA walkthrough
 
 We will be using the numpy, pandas, scanpy, matplotlib packages all downloadable through conda. Environment set up instructions can be found in jupyterSetUp.md
 
@@ -175,10 +191,22 @@ with plt.rc_context({'figure.figsize': (8, 8)}):
 ![image](https://github.com/procho/pfbseq/assets/110238030/563b6db8-2127-4961-9eca-8176d449d350)
 
 
+We get clusters and the differentially expressed genes using the wilcoxon method on the leiden clusters shown above.
+
+```python
+sc.tl.rank_genes_groups(adata, 'leiden', method='wilcoxon')
+sc.pl.rank_genes_groups(adata, n_genes=15, sharey=False)
+```
+<img src='./images/RNA_2.png' /> 
+
+### GO Annotation walkthrough
+
+This is cluster 16 and these are the top differentially expressed genes. 
+
+<img src='./images/RNA_7.png' /> 
 
 
-
-### Antibody walkthrough
+### Antibody (ADT) walkthrough
 
 * Reading in .csv file with cell and antibody counts
 
