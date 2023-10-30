@@ -82,9 +82,9 @@ GO:0042995      level-02        depth-02        cell projection [cellular_compon
 GO:0009897      level-03        depth-03        external side of plasma membrane [cellular_component]   3.988385412504329       5.073967906570723e-06
 ```
 
-The environment used to run these scripts can be downloaded using the included [env.yaml] file : 
+The environment used to run these scripts can be downloaded using the included [env.yaml](https://github.com/procho/pfbseq/blob/main/share/RNA_ChIP.yaml) file 
 ```conda env create --file RNA_ChIP.yaml --name RNA_ChIP```
-
+Note: Samtools must be installed separately!
 
 
 
