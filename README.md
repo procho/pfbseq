@@ -57,7 +57,7 @@ file, as well as lists of significant DE genes, and lists of overlap between
 upregulated or downregulated genes and annotated peaks. A bar graph and a pie
 chart are also generated to visualize overlap between these datasets:
 
-<img src='./images/venn_diagram.png' width='400' height='200'/>
+<img src='./images/venn_diagram.png' width='400' height='300'/>
 
 <img src='./images/bar_graph.png' width='300' height='300'/>
 
