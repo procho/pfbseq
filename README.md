@@ -46,9 +46,13 @@ options:
 (description of peak calling algorithm + script)
 
 * **Peak Annotation:**
-(description of peak annotation script)
+ChIP-seq peaks are annotated based on a user input GFF3 genome annotation file.
+First, the GFF3 file is parsed using '''gff3_to_TSSbed.py''' which extracts
+transcription start site information and gene names from the GFF3 file. Then,
+ChIP-seq peaks are annotated to the closest transcription start site using
+bedtools in '''annotate_bed_to_TSS.sh'''. 
  
-* **Integration of RNA-seq and ChIP-seq**
+* **Integration of RNA-seq and ChIP-seq:**
 
 The input RNAseq gene list is parsed to identify up and downregulated genes
 based on user-defined cutoffs. These lists are then integrated with annotated
