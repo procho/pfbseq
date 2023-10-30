@@ -18,6 +18,12 @@ conda activate final_project
 conda install -c conda-forge jupyter numpy pandas scanpy matplotlib
 ```
 
+## May need to update matplotlib
+
+```bash
+conda update matplotlib
+``` 
+
 ## Open jupyter notebook 
 
 ```bash
