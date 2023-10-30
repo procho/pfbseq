@@ -68,6 +68,5 @@ def bar_graph(x_list, y_list):
   fig,ax = plt.subplots(figsize = (8,8))
   ax.bar(x_list, y_list, color = 'maroon', edgecolor = 'black')
   ax.set_ylabel("% DEGs bound by TF")
-  ax.grid(b='visible', color = 'grey', linestyle = '-.', linewidth = 0.3, alpha = 0.2)
   ax.set_title("RNA-seq Differential Genes vs ChIP-seq Peaks")
   fig.savefig('bar_graph.png')  
