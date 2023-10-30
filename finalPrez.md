@@ -133,6 +133,9 @@ adata.obs['hclust25'] = cluster.fit_predict(X_pca).astype(str)
 sc.pl.umap(adata, color=['hclust15', 'hclust20', 'hclust25'], legend_loc='on data', wspace = 0.25, legend_fontsize=10)
 ```
 
+![image](https://github.com/procho/pfbseq/assets/110238030/7f5f7f64-2a71-4602-a1a3-a56d8edcdfa4)
+
+
 
 ### Antibody walkthrough
 
