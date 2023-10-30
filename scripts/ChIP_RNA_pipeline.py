@@ -7,17 +7,70 @@ import matplotlib.pyplot as plt
 from matplotlib_venn import venn3
 import subprocess
 from gff3_to_TSSbed import *
+import argparse
+from argparse import RawTextHelpFormatter
+from bam_to_peaks import *
+import os
 
-# This script will take five inputs: A GFF3 file to use for annotation, A ChIP-seq bed file of peaks, a DEseq output file, a log2fc cutoff, and a p value cutoff
-GFF3_file = sys.argv[1]
-peak_file = sys.argv[2] 
-DEG_file = sys.argv[3] 
-log2FC = sys.argv[4] 
-pval = sys.argv[5] 
+###### Formatting and documenting input arguments #######
 
-if len(sys.argv) != 6:
-  print('Please include the correct four inputs!')
+parser = argparse.ArgumentParser(description=f"This is a wrapper script for comparison of RNAseq and ChIPseq data.\n\nIf a bam or a sam file is provided from a ChIP-seq experiment, a custom peak calling algorithm will be run. Otherwise a pre-made bed file may be entered with called ChIP-seq peaks.\n\nAn RNAseq file should be provided containing differential expression data, it should be a tab-delimited file containing columns for gene IDs, fold change (log2 transformed), and p values. If desired, the user may designate custom pval and log2fc cutoffs for downstream analysis. Otherwise, reasonable default values will be utilized.\n\nThis script will annotate called peaks (either from an input bed file or generated from a bam file) based on the distance to the nearest gene TSS. It will then output many files and graphs representing overlap and intersections between significant differentially expressed genes (either up or downregulated) to called ChIP-seq peaks. Finally, the script will output enriched GO terms for either upregulated bound genes or downregulated bound genes.", formatter_class = RawTextHelpFormatter)
+
+parser.add_argument("-G", required = True, help='Input GFF3 annotation file for genome of ChIP/RNAseq data', dest = 'GFF3_file')
+
+parser.add_argument("-r", required = True, help='Input differential gene expression file. Required column format = gene_ID  Log2FC  p-value', dest = 'RNAseq_file')
+
+parser.add_argument("-b", required = False, help='Optional: supply input ChIP seq bed file, if this is not provided, user must provide a .bam file for peak calling', dest = 'bed_file')
+
+parser.add_argument("-B", required = False, help='Optional: supply input bam file for peak calling before intersection. If this is not provided, user must provide a ChIPseq .bed file', dest = 'bam_file')
+
+parser.add_argument("-f", required = False, help='Optional: supply log2fc cutoff for differentially expressed gene list. Default: 0.585', dest = 'log2fc')
+
+parser.add_argument("-p", required = False, help='Optional: supply p value cutoff for differentially expressed gene list. Default: 0.05', dest = 'pval')
+
+args = parser.parse_args()
+
+
+# Quit and report error if user inputs both a bed file and a bam file
+if args.bed_file and args.bam_file:
+  print('Please only input a bed file OR a bam file!')
   sys.exit(1)
+
+# Quit and report error if user inputs neither a bed file or a bam file
+if not args.bed_file and not args.bam_file:
+  print('Must input either a bed file or a bam file!')
+  sys.exit(1)
+
+
+######### Assigning input args to variables ########
+
+GFF3_file = args.GFF3_file
+DEG_file = args.RNAseq_file
+
+if args.pval:
+  pval = args.pval
+else:
+  pval = 0.05
+
+if args.log2fc:
+  log2FC = args.log2fc
+else:
+  log2FC = 0.585
+
+if args.bam_file:
+  bam_file = args.bam_file
+
+if args.bed_file:
+  peak_file = args.bed_file
+
+
+# If bam file is input, run peak caller!
+if args.bam_file:
+  bam_to_depth(bam_file)
+  depth_to_thresh(f"{bam_file[:-4] + '.depth'}")
+  thresh_to_peaks(f"{bam_file[:-4] + '.thresh.depth'}")
+  peak_file = f"{bam_file[:-4] + '.bed'}"  
+
 
 # Run function to create TSS bed file from GFF3 file
 gff3_to_tssbed(GFF3_file)
@@ -77,3 +130,11 @@ x_list = ['Up Genes','Down Genes']
 
 bar_graph(x_list, y_list)
 
+
+# Run GO analysis on upregulated bound genes and downregulated bound genes!
+cmd2 = f'./GO_masterscript.py mouse'
+cmd2_run = subprocess.run(cmd2, shell=True, stdout = subprocess.PIPE, stderr = subprocess.PIPE)
+
+if cmd_run.returncode != 0:
+  print(f'GO analysis step failed')
+  exit(2)
