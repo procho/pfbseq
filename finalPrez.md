@@ -89,6 +89,32 @@ with plt.rc_context({'figure.figsize': (8, 8)}):
 * Reading in .csv file with cell and antibody counts
 
 ```python
-
+protein = sc.read_csv('./share/GSM5123955_X066-RP0C1W1_leukopak_perm-cells_cite_48M_adt_counts_fixed.csv')
+protein.var_names_make_unique()
 ```
 
+* Graph of antibody counts
+
+```python
+sc.pl.highest_expr_genes(protein, n_top=40, )
+```
+![image](https://github.com/procho/pfbseq/assets/110238030/0e08b7b5-ed3a-449f-9c49-a19b9846b223)
+
+* Normalization and clustering
+
+```python3
+sc.pp.log1p(protein)
+sc.pp.pca(protein, n_comps=20)
+sc.pp.neighbors(protein, n_neighbors=30)  
+sc.tl.leiden(protein,resolution = 0.8)
+```
+
+* Creating UMAP
+
+```python
+sc.tl.umap(protein)
+with plt.rc_context({'figure.figsize': (8, 8)}):
+    sc.pl.umap(protein, color=['leiden'],legend_loc='on data')
+```
+
+![image](https://github.com/procho/pfbseq/assets/110238030/7c1e2e6b-0ded-420d-8700-147e37e96d55)
