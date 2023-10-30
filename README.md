@@ -8,11 +8,11 @@ A toolkit for the intersection and analysis of omics datasets
 ### Description and Rationale:
 As omics experiments grow more and more commonplace, the need for tools to integrate these various data modalities has grown. This wrapper script allows for quick and easy integration of two common datasets, bulk RNA-seq and ChIP-seq.
 
-### Overview of Pipeline:
-<img src='./images/biorender_workflow.png' width='800' height='300'/> 
+### Overview of Pipeline: ```ChIP_RNA_pipeline.py```
+<img src='./images/biorender_workflow.png' width='700' height='300'/> 
 
 ```
-usage: ChIP_RNA_intersect.py [-h] -G GFF3_FILE -r RNASEQ_FILE [-b BED_FILE] [-B BAM_FILE] [-f LOG2FC]
+usage: ChIP_RNA_pipeline.py [-h] -G GFF3_FILE -r RNASEQ_FILE [-b BED_FILE] [-B BAM_FILE] [-f LOG2FC]
                              [-p PVAL]
 
 This is a wrapper script for comparison of RNAseq and ChIPseq data.
