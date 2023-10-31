@@ -11,9 +11,9 @@ speciesDict = GeneGoDict(f"GO_parser_{species}.out")
 if species == "mouse":
 
 	# For mouse RNAseq/ChIPseq data
-	ctrl_file = "./Danni/all_genes.txt"
-	upsample_file = "./Danni/upregulated_bound_genes.txt"
-	downsample_file = "./Danni/downregulated_bound_genes.txt"
+	ctrl_file = "all_genes.txt"
+	upsample_file = "upregulated_bound_genes.txt"
+	downsample_file = "downregulated_bound_genes.txt"
 
 	#upregulated genes
 	GO_results_up = fold_enrich(upsample_file, ctrl_file, speciesDict)
