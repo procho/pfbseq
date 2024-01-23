@@ -54,6 +54,11 @@ def fold_enrich(sample_file,ctrl_file, speciesDict):
 		fold_enrichment = (GOcount_sample/gene_num_sample) / (GOcount_ctrl/gene_num_ctrl)
 		
 		# Fisher's exact test, obtain p value
+		# simon: Jan 2024
+		# fisher exact test is expecting counts of the same thing, not a mixture of GO annots
+		# and gene counts. Need to take a look at the lines below
+		print('Something is not quite right here. Check the code.')
+		exit(1)
 		a = GOcount_sample
 		b = GOcount_ctrl
 		c = gene_num_sample - GOcount_sample
